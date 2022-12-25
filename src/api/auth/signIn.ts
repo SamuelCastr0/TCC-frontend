@@ -1,12 +1,18 @@
 import fetcher from "..";
 
-const signIn = async (email: string, password: string) => {
-  const { data, status } = await fetcher('post')(`user/login/`, { email, password })
+export interface ResponseProps {
+  access_token: string;
+  refresh_token: string;
+  is_staff: boolean;
+}
 
-  return {
-    data,
-    status,
-  };
+const signIn = async (email: string, password: string) => {
+  const response = await fetcher("post")<ResponseProps>(`user/login/`, {
+    email,
+    password,
+  });
+
+  return response;
 };
 
 export default signIn;

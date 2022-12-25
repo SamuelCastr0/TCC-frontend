@@ -14,12 +14,11 @@ export interface PaginationResponseProps {
 }
 
 const searchLearningObjects = async (query: string) => {
-  const { data, status } = await fetcher('get')<PaginationResponseProps>(`search-objects/?${query}`)
+  const response = await fetcher("get")<PaginationResponseProps>(
+    `search-objects/?${query}`
+  );
 
-  return {
-    data,
-    status,
-  };
+  return response;
 };
 
 export default searchLearningObjects;

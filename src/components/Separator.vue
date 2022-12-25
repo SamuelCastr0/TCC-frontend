@@ -1,11 +1,10 @@
 <template>
-    <div class="separator" />
+  <div class="separator" />
 </template>
-<style>
+<style scoped>
 .separator {
-    height: 37px;
-    width: 0px;
-    border: 1px solid #FFFFFF;
-} 
-
+  height: 37px;
+  width: 0px;
+  border: 1px solid #ffffff;
+}
 </style>

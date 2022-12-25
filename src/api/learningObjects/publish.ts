@@ -2,12 +2,11 @@ import fetcher from "..";
 import type { LearningObject } from "./retrieve";
 
 const publishLearningObject = async (id: number) => {
-  const { data, status } = await fetcher('put')<LearningObject>(`toggle-publish/${id}/`);
+  const response = await fetcher("put")<LearningObject>(
+    `toggle-publish/${id}/`
+  );
 
-  return {
-    data,
-    status,
-  };
+  return response;
 };
 
 export default publishLearningObject;

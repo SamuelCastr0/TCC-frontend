@@ -1,12 +1,9 @@
 import fetcher from "..";
 
 const logout = async () => {
-  const { data, status } = await fetcher('post')(`user/logout/`)
+  const response = await fetcher("post")(`user/logout/`);
 
-  return {
-    data,
-    status,
-  };
+  return response;
 };
 
 export default logout;

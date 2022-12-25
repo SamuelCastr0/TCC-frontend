@@ -18,7 +18,7 @@ import { modalRetrieveStore } from "@/store/learningObjectsModals";
   </Modal
   >
 </template>
-<style>
+<style scoped>
 .list {
   display: flex;
   flex-direction: column;

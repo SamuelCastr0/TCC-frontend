@@ -1,12 +1,12 @@
 import fetcher from "..";
+import { ResponseProps } from "./signIn";
 
 const googleSignIn = async (token: string) => {
-  const { data, status } = await fetcher('post')(`user/login/google/`, { idToken: token })
+  const response = await fetcher("post")<ResponseProps>(`user/login/google/`, {
+    idToken: token,
+  });
 
-  return {
-    data,
-    status,
-  };
+  return response;
 };
 
 export default googleSignIn;

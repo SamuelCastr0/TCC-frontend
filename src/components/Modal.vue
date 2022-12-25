@@ -17,7 +17,7 @@ defineEmits(["closeModal"]);
         <p class="description">{{ description }}</p>
       </div>
       <button @click="$emit('closeModal')" class="close-button">
-        <fa icon="fa-xmark" ></fa>
+        <fa icon="fa-xmark"></fa>
       </button>
       <slot></slot>
     </div>
@@ -54,7 +54,7 @@ defineEmits(["closeModal"]);
 .header {
   display: flex;
   flex-direction: column;
-  gap: .8rem;
+  gap: 0.8rem;
 }
 .title {
   font-size: 2rem;
