@@ -4,7 +4,7 @@ import { reactive } from "vue";
 import session from "./session";
 
 export interface UserStoreProps {
-  user: UserProps | null;
+  value: UserProps | null;
   isFetching: boolean;
   isUserIn: boolean;
   socialUser: any;
@@ -13,8 +13,8 @@ export interface UserStoreProps {
   clearStore: () => void;
 }
 
-const userStore = reactive<UserStoreProps>({
-  get user() {
+const user = reactive<UserStoreProps>({
+  get value() {
     const user = window.localStorage.getItem("user");
     if (user) return JSON.parse(user);
     return null;
@@ -45,4 +45,4 @@ const userStore = reactive<UserStoreProps>({
   },
 });
 
-export default userStore;
+export default user;

@@ -1,11 +1,11 @@
 import { reactive } from "vue";
 
-export interface SearchStoreProps {
+export interface SearchProps {
   value: string;
 }
 
-const searchStore = reactive<SearchStoreProps>({
+const search = reactive<SearchProps>({
   value: "",
 });
 
-export default searchStore;
+export default search;

@@ -37,7 +37,7 @@ import type { ApiErrorProps } from "@/api/index";
 import { decodeCredential } from "vue3-google-login";
 import type { CallbackTypes } from "vue3-google-login";
 import googleSignIn from "@/api/auth/googleSignIn";
-import userStore from "@/store/user";
+import user from "@/store/user";
 import session from "@/store/session";
 
 const schema = yup.object({
@@ -55,7 +55,7 @@ const googleCallback: CallbackTypes.CredentialCallback = async (response) => {
   try {
     const { data } = await googleSignIn(response.credential);
     session.setSession(data.access_token, data.refresh_token);
-    userStore.setSocialUser(decodeCredential(response.credential));
+    user.setSocialUser(decodeCredential(response.credential));
     router.push({ name: "Home" });
   } catch (error) {
     toast.error(

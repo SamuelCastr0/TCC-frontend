@@ -1,32 +1,35 @@
 <script setup lang="ts">
 import Modal from "@/components/Modal.vue";
-import { modalRetrieveStore } from "@/store/learningObjectsModals";
+import { modalRetrieve } from "@/store/learningObjectsModals";
 </script>
 <template>
   <Modal
-    v-model="modalRetrieveStore.isModalOpen"
-    @close-modal="() => modalRetrieveStore.closeModal()"
+    v-model="modalRetrieve.isModalOpen"
+    @close-modal="() => modalRetrieve.closeModal()"
     title="Visualizar dados"
     description="Metadados do Objeto de Aprendizagem"
-    >
+  >
     <ul class="list">
-      <li class="meta-data" v-for="metaData in Object.entries(modalRetrieveStore.data)">
-        <span>{{metaData[0]}}:</span>
-        <p>{{metaData[1]}}</p>
+      <li
+        class="meta-data"
+        v-for="data in Object.entries(modalRetrieve.data)"
+        :key="data[0]"
+      >
+        <span>{{ data[0] }}:</span>
+        <p>{{ data[1] }}</p>
       </li>
     </ul>
-  </Modal
-  >
+  </Modal>
 </template>
 <style scoped>
 .list {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 .meta-data {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 .meta-data span {
   font-weight: 700;

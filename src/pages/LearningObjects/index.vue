@@ -3,13 +3,28 @@ import getLearningObjects from "@/api/learningObjects/retrieve";
 import type { PaginationResponseProps } from "@/api/learningObjects/retrieve";
 import debounce from "@/utils/debounce";
 import { onMounted, ref } from "vue";
-import { useRouter, useRoute, stringifyQuery, onBeforeRouteUpdate } from "vue-router";
-import type {  LocationQueryRaw } from "vue-router";
+import {
+  useRouter,
+  useRoute,
+  stringifyQuery,
+  onBeforeRouteUpdate,
+} from "vue-router";
+import type { LocationQueryRaw } from "vue-router";
 import Paginate from "vuejs-paginate-next";
-import { CreateModal, DeleteModal, RetrieveModal, UpdateModal } from "./components";
+import {
+  CreateModal,
+  DeleteModal,
+  RetrieveModal,
+  UpdateModal,
+} from "./components";
 import PublishButton from "./components/PublishButton.vue";
-import { modalCreateStore, modalRetrieveStore, modalUpdateStore, modalDeleteStore } from "@/store/learningObjectsModals";
-import userStore from "@/store/user";
+import {
+  modalCreate,
+  modalRetrieve,
+  modalUpdate,
+  modalDelete,
+} from "@/store/learningObjectsModals";
+import user from "@/store/user";
 
 export interface QueryParamsProps extends LocationQueryRaw {
   page: number;
@@ -19,13 +34,13 @@ export interface QueryParamsProps extends LocationQueryRaw {
 const result = ref({} as PaginationResponseProps);
 const search = ref<string>("");
 const page = ref<number>(1);
-const filter = ref<string>('');
+const filter = ref<string>("");
 const router = useRouter();
 const route = useRoute();
 
 const updateLearningObjects = async () => {
-  const query = { search: search.value, page: page.value }
-  if (filter.value) query['filter'] = filter.value
+  const query = { search: search.value, page: page.value };
+  if (filter.value) query["filter"] = filter.value;
 
   const queryStringfyed = stringifyQuery(query);
   const { data } = await getLearningObjects(queryStringfyed);
@@ -35,8 +50,8 @@ const updateLearningObjects = async () => {
 const updateRoute = () => {
   const query: QueryParamsProps = {
     search: search.value,
-    page: search.value ? 1 :  page.value,
-    filter: filter.value
+    page: search.value ? 1 : page.value,
+    filter: filter.value,
   };
   if (!search.value) delete query?.search;
   if (!filter.value) delete query?.filter;
@@ -49,10 +64,10 @@ const updateRoute = () => {
 
 const handleSearch = () => debounce(updateRoute, 800)();
 
-const handleFilter = ({target}: Event) => {
+const handleFilter = ({ target }: Event) => {
   filter.value = (target as any).value;
   updateRoute();
-}
+};
 
 const navigationCallback = (pageNum) => {
   page.value = Number(pageNum);
@@ -61,7 +76,7 @@ const navigationCallback = (pageNum) => {
 
 onMounted(() => {
   search.value = route.query.search as any as string;
-  filter.value = (route.query.filter as any as string) || '';
+  filter.value = (route.query.filter as any as string) || "";
   page.value = Number(route.query.page || 1) as any as number;
   updateRoute();
 });
@@ -74,58 +89,91 @@ onBeforeRouteUpdate(async () => {
   <div class="crud-container">
     <div class="crud-wrapper">
       <div class="object-list-header">
-        <div v-if="userStore.user?.is_superuser" class="filters">
+        <div v-if="user.value?.is_superuser" class="filters">
           <div>
-            <input @focus="handleFilter" name="radio-group" type="radio" id="default" value="" v-model="filter"/>
+            <input
+              @focus="handleFilter"
+              name="radio-group"
+              type="radio"
+              id="default"
+              value=""
+              v-model="filter"
+            />
             <label for="default">Sem filtro</label>
           </div>
           <div>
-            <input @focus="handleFilter" name="radio-group" type="radio" id="published" value="published" v-model="filter"/>
+            <input
+              @focus="handleFilter"
+              name="radio-group"
+              type="radio"
+              id="published"
+              value="published"
+              v-model="filter"
+            />
             <label for="published">Publicados</label>
           </div>
           <div>
-            <input @focus="handleFilter" name="radio-group" type="radio" id="not-published" value="not-published" v-model="filter"/>
+            <input
+              @focus="handleFilter"
+              name="radio-group"
+              type="radio"
+              id="not-published"
+              value="not-published"
+              v-model="filter"
+            />
             <label for="not-published">Não publicados</label>
           </div>
         </div>
         <div class="top-header">
-          <div class="search" >
+          <div class="search">
             <input
               id="search"
               v-model="search"
               v-on:input="handleSearch"
               type="text"
               placeholder="Digite os metadados do objeto"
-            >
+            />
             <fa icon="fa-magnifying-glass" />
           </div>
-          <button @click="() => modalCreateStore.openModal()" class="btn-add">  
-              Adicionar
+          <button @click="() => modalCreate.openModal()" class="btn-add">
+            Adicionar
             <fa icon="fa-plus-circle" />
           </button>
         </div>
       </div>
       <ul class="object-list">
-        <li class="object" v-for="item in result.results">
+        <li class="object" v-for="item in result.results" :key="item.id">
           <div class="object-info">
             <h3 class="title">{{ item.name }}</h3>
             <p class="description">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley.
             </p>
           </div>
           <div class="object-footer">
-            <PublishButton v-if="userStore.user?.is_superuser" @update-list="updateLearningObjects" :id="item.id" :is-published="item.isPublished" />
+            <PublishButton
+              v-if="user.value?.is_superuser"
+              @update-list="updateLearningObjects"
+              :id="item.id"
+              :is-published="item.isPublished"
+            />
             <div class="btn-group">
-              <button
-                @click="() => modalRetrieveStore.openModal(item)"
-                class="btn"
-              >
+              <button @click="() => modalRetrieve.openModal(item)" class="btn">
                 <fa icon="fa-eye" />
               </button>
-              <button v-if="userStore.user?.is_superuser" @click="() => modalUpdateStore.openModal(item)" class="btn">
+              <button
+                v-if="user.value?.is_superuser"
+                @click="() => modalUpdate.openModal(item)"
+                class="btn"
+              >
                 <fa icon="fa-pen-to-square" />
               </button>
-              <button v-if="userStore.user?.is_superuser" @click="() => modalDeleteStore.openModal(item)" class="btn">
+              <button
+                v-if="user.value?.is_superuser"
+                @click="() => modalDelete.openModal(item)"
+                class="btn"
+              >
                 <fa icon="fa-trash" />
               </button>
             </div>
@@ -180,7 +228,7 @@ onBeforeRouteUpdate(async () => {
   border-radius: 14px;
   display: flex;
   width: 25rem;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   align-items: center;
   border: 1px rgba(0, 0, 0, 0.25) solid;
   border-radius: 14px;
@@ -191,7 +239,7 @@ onBeforeRouteUpdate(async () => {
   width: 100%;
   border-radius: 14px;
   height: 3rem;
-  padding: .5rem 1rem .5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
 }
 .search svg {
   padding-right: 1rem;
@@ -208,7 +256,7 @@ onBeforeRouteUpdate(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
+  gap: 0.5rem;
   background: var(--purple-400);
   height: 3rem;
   padding: 1rem;
@@ -216,7 +264,7 @@ onBeforeRouteUpdate(async () => {
   border-radius: 14px;
   font-size: 1rem;
   color: white;
-  transition: .3s;
+  transition: 0.3s;
 }
 .btn-add:hover {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
@@ -234,9 +282,10 @@ onBeforeRouteUpdate(async () => {
 }
 .filters div {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
-.filters input, .filters label {
+.filters input,
+.filters label {
   cursor: pointer;
 }
 .filters input {
@@ -276,7 +325,7 @@ onBeforeRouteUpdate(async () => {
 }
 .btn-group {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   flex-wrap: nowrap;
   margin-left: auto;
 }

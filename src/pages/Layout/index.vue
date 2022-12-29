@@ -1,5 +1,5 @@
 <template>
-  <LoadingPage v-if="userStore.isFetching" />
+  <LoadingPage v-if="user.isFetching" />
   <div v-else class="container">
     <div>
       <Header />
@@ -11,12 +11,12 @@
 </template>
 <script setup lang="ts">
 import Header from "@/components/Header.vue";
-import userStore from "@/store/user";
+import user from "@/store/user";
 import { onMounted } from "vue";
 import LoadingPage from "@/components/LoadingPage.vue";
 
 onMounted(() => {
-  if (userStore.isUserIn) userStore.retrieveUser();
+  if (user.isUserIn) user.retrieveUser();
 });
 </script>
 <style scoped>

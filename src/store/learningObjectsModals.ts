@@ -15,14 +15,9 @@ const store = {
   },
 };
 
-const modalCreateStore = reactive({ ...store });
-const modalRetrieveStore = reactive({ ...store });
-const modalUpdateStore = reactive({ ...store });
-const modalDeleteStore = reactive({ ...store });
+const modalCreate = reactive({ ...store });
+const modalRetrieve = reactive({ ...store });
+const modalUpdate = reactive({ ...store });
+const modalDelete = reactive({ ...store });
 
-export {
-  modalRetrieveStore,
-  modalUpdateStore,
-  modalDeleteStore,
-  modalCreateStore,
-};
+export { modalRetrieve, modalUpdate, modalDelete, modalCreate };

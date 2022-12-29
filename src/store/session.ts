@@ -8,7 +8,7 @@ export interface TokenProps {
   isStaff: boolean;
 }
 
-const store = reactive({
+const session = reactive({
   get accessToken() {
     return localStorage.getItem("access_token");
   },
@@ -31,4 +31,4 @@ const store = reactive({
   },
 });
 
-export default store;
+export default session;

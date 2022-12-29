@@ -4,20 +4,24 @@
       <div v-on:click="() => (isOpen = false)" class="background"></div>
       <div class="list">
         <div class="header">
-          <h3>Monte seu Curso</h3>
+          <div>
+            <input
+              type="text"
+              :style="{ width: `${name.length + 1}ch` }"
+              v-model="name"
+            />
+            <fa icon="fa-pen-to-square" v-on:click="handleFocus" />
+          </div>
           <span>Araste os objetos para alterar a ordem</span>
         </div>
         <Draggable
-          v-if="cartStore.value.length"
-          v-model="cartStore.value"
+          v-if="cart.value.length"
+          v-model="cart.value"
           tag="transition-group"
           item-key="id"
         >
           <template v-slot:item="{ item }">
-            <div
-              v-if="item.id === cartStore.value[0].id"
-              class="separator"
-            ></div>
+            <div v-if="item.id === cart.value[0].id" class="separator"></div>
             <li :key="item.id">
               <div>
                 <h4>{{ item.name }}</h4>
@@ -37,14 +41,16 @@
           </template>
         </Draggable>
         <h4 class="empty" v-else>Adicione objetos para criar um curso</h4>
-        <div v-if="cartStore.value.length" class="footer">
-          <Button v-if="userStore.isUserIn">Salvar Curso</Button>
+        <div v-if="cart.value.length" class="footer">
+          <Button v-if="user.isUserIn" v-on:click="handleCreate"
+            >Salvar Curso</Button
+          >
           <RouterLink v-else to="/signin">Entre para salvar o curso</RouterLink>
         </div>
       </div>
     </div>
     <button class="open" v-on:click="handleOpen">
-      <span>{{ cartStore.value.length }}</span>
+      <span>{{ cart.value.length }}</span>
       <fa icon="fa-cart-shopping" />
     </button>
   </div>
@@ -52,12 +58,38 @@
 <script setup lang="ts">
 import Draggable from "vue3-draggable";
 import { ref, onBeforeMount, watch } from "vue";
-import cartStore from "@/store/cart";
+import cart from "@/store/cart";
 import Button from "@/components/Button.vue";
 import { LearningObject } from "@/api/learningObjects/search";
-import userStore from "@/store/user";
+import user from "@/store/user";
+import createCourse from "@/api/course/create";
+import { useToast } from "vue-toastification";
+import { ApiErrorProps } from "@/api";
+import { AxiosError } from "axios";
+import { RouterLink } from "vue-router";
 
 const isOpen = ref<boolean>(false);
+const name = ref<string>("Nome do curso");
+const toast = useToast();
+
+const handleCreate = () => {
+  try {
+    createCourse({ name: name.value, objects: cart.value });
+    cart.clear();
+    toast.success("Curso salvo com sucesso!");
+  } catch (error) {
+    toast.error(
+      ((error as AxiosError).response?.data as ApiErrorProps).detail ||
+        "Alguma coisa deu errado"
+    );
+  }
+};
+
+const handleFocus = ({ currentTarget }: Event) => {
+  (currentTarget as HTMLInputElement).parentElement
+    ?.querySelector("input")
+    ?.focus();
+};
 
 const handleOpen = (event: Event) => {
   event.stopPropagation();
@@ -65,7 +97,7 @@ const handleOpen = (event: Event) => {
 };
 
 const handleDelete = ({ currentTarget }: Event, item: LearningObject) => {
-  cartStore.remove(item);
+  cart.remove(item);
   const itemList = (currentTarget as HTMLButtonElement).parentElement;
   const separator = itemList?.nextElementSibling;
   itemList?.remove();
@@ -73,12 +105,12 @@ const handleDelete = ({ currentTarget }: Event, item: LearningObject) => {
 };
 
 onBeforeMount(() => {
-  cartStore.init();
+  cart.init();
 });
 
 watch(
-  () => cartStore.value,
-  () => cartStore.save()
+  () => cart.value,
+  () => cart.save()
 );
 </script>
 <style scoped>
@@ -131,12 +163,19 @@ watch(
   flex-direction: column;
   gap: 0.5rem;
 }
-.header h3 {
+.header input {
   font-size: 1.5rem;
   font-weight: 700;
 }
 .header span {
   font-size: 0.875rem;
+}
+.header div {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: left !important;
+  align-items: center;
+  gap: 0.5rem;
 }
 .list {
   display: flex;
@@ -186,6 +225,9 @@ watch(
   top: 0;
   right: 0;
   color: var(--purple-400);
+}
+.header svg {
+  position: initial;
 }
 .separator {
   height: 1px;

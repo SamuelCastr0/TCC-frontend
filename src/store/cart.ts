@@ -1,19 +1,19 @@
 import { LearningObject } from "@/api/learningObjects/search";
 import { reactive } from "vue";
 
-export interface CartStoreProps {
+export interface CartProps {
   value: Array<LearningObject>;
   add: (item: LearningObject) => void;
   remove: (item: LearningObject) => void;
+  clear: () => void;
   save: () => void;
   init: () => void;
 }
 
-const cartStore = reactive<CartStoreProps>({
+const cart = reactive<CartProps>({
   value: [],
   add(item) {
     this.value.push(item);
-    console.log(this.value);
     this.save();
   },
   remove(item) {
@@ -24,6 +24,10 @@ const cartStore = reactive<CartStoreProps>({
       this.save();
     } else localStorage.removeItem("cart");
   },
+  clear() {
+    localStorage.removeItem("cart");
+    this.value = [];
+  },
   save() {
     localStorage.setItem("cart", JSON.stringify(this.value));
   },
@@ -32,4 +36,4 @@ const cartStore = reactive<CartStoreProps>({
   },
 });
 
-export default cartStore;
+export default cart;

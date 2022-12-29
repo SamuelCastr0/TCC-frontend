@@ -2,11 +2,11 @@
   <div class="header-container">
     <nav class="navigation">
       <a v-on:click="handleHome" class="logo">Pesquise</a>
-      <ul v-if="userStore?.isUserIn" class="navigation-options">
-        <li v-if="userStore.user?.is_staff">
+      <ul v-if="user?.isUserIn" class="navigation-options">
+        <li v-if="user.value?.is_staff">
           <router-link to="/learning-objects">Objetos</router-link>
         </li>
-        <!-- <Separator v-if="userStore.user?.is_staff" /> -->
+        <!-- <Separator v-if="user.value?.is_staff" /> -->
         <li><router-link to="/courses">Cursos</router-link></li>
         <li><router-link to="/about">Sobre</router-link></li>
         <!-- <Separator /> -->
@@ -14,15 +14,13 @@
           <fa v-if="isOpen" icon="fa-chevron-up" />
           <fa v-else icon="fa-chevron-down" />
           <img
-            v-if="userStore?.socialUser?.picture"
+            v-if="user?.socialUser?.picture"
             referrerpolicy="no-referrer"
             class="user-image"
             :src="userImage"
           />
           <fa v-else class="user-icon" icon="fa-user-circle" />
-          <span @click="toggleOpen">{{
-            userStore.user?.name.split(" ")[0]
-          }}</span>
+          <span @click="toggleOpen">{{ user.value?.name.split(" ")[0] }}</span>
           <ul class="drop-down" @click="stopPropagation" v-if="isOpen">
             <li @click="handleLogout">
               <router-link to="">Sair</router-link>
@@ -42,7 +40,7 @@
 <script setup lang="ts">
 import logout from "@/api/auth/signOut";
 import { useRouter } from "vue-router";
-import userStore from "@/store/user";
+import user from "@/store/user";
 import { ref } from "vue";
 import session from "@/store/session";
 import searchStore from "@/store/search";
@@ -53,8 +51,8 @@ const router = useRouter();
 
 const stopPropagation = (event: Event) => event.stopPropagation();
 
-const userImage = userStore.socialUser?.picture
-  ? new URL(userStore.socialUser.picture).href
+const userImage = user.socialUser?.picture
+  ? new URL(user.socialUser.picture).href
   : "";
 
 const handleOutsideClick = (event: Event) => {
@@ -75,7 +73,7 @@ const toggleOpen = (event: Event) => {
 
 const handleLogout = async () => {
   await logout();
-  userStore.clearStore();
+  user.clearStore();
   session.deleteSession();
   window.removeEventListener("click", handleOutsideClick);
   router.push({ name: "SignIn" });

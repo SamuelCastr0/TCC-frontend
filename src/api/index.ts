@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import session from "@/store/session";
-import userStore from "@/store/user";
+import user from "@/store/user";
 
 export type Method = "get" | "delete" | "post" | "put" | "patch";
 
@@ -53,7 +53,7 @@ http.interceptors.response.use(
         return axios.request(error.config);
       } catch {
         session.deleteSession();
-        userStore.clearStore();
+        user.clearStore();
         window.location.reload();
       }
     }
