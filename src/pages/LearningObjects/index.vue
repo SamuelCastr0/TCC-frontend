@@ -62,7 +62,9 @@ const updateRoute = () => {
   });
 };
 
-const handleSearch = () => debounce(updateRoute, 800)();
+const debouncedSearch = debounce(updateRoute, 800);
+
+const handleSearch = () => debouncedSearch();
 
 const handleFilter = ({ target }: Event) => {
   filter.value = (target as any).value;

@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SignIn from "@/auth/SignIn/index.vue";
 import SignUp from "@/auth/SignUp/index.vue";
 import Home from "@/pages/Home/index.vue";
-import Courses from "@/pages/Library/index.vue";
+import Courses from "@/pages/Courses/index.vue";
 import About from "@/pages/About/index.vue";
 import LearningObjects from "@/pages/LearningObjects/index.vue";
 import AuthLayout from "@/auth/Layout/index.vue";

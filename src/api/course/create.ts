@@ -5,10 +5,10 @@ export interface RequestProps {
   objects: Array<any>;
 }
 
-const createCourse = async (data: RequestProps) => {
+const create = async (data: RequestProps) => {
   const response = await fetcher("post")(`course/`, data);
 
   return response;
 };
 
-export default createCourse;
+export default create;

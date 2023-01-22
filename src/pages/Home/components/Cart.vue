@@ -76,6 +76,7 @@ const handleCreate = () => {
   try {
     createCourse({ name: name.value, objects: cart.value });
     cart.clear();
+    name.value = "Nome do curso";
     toast.success("Curso salvo com sucesso!");
   } catch (error) {
     toast.error(

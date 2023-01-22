@@ -1,9 +1,7 @@
-export default function debounce(fn: (...args: any) => any, delay: number) {
+export default function debounce(callback: () => void, delay: number) {
   let timeout: ReturnType<typeof setTimeout>;
-  return (...args: any) => {
+  return () => {
     if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn(...args);
-    }, delay);
+    timeout = setTimeout(callback, delay);
   };
 }
