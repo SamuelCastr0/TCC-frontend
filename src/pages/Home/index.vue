@@ -22,23 +22,17 @@
     <ul class="objct-list" v-if="result && route.query.search">
       <Item v-for="item in result.results" :object="item" :key="item.id" />
     </ul>
-    <Paginate
-      v-if="result && route.query.search"
-      v-model="page"
-      :page-count="result.page_count"
-      :page-range="3"
-      :margin-pages="2"
-      :click-handler="navigationCallback"
-      :prev-text="'Anterior'"
-      :next-text="'Próxima'"
-      :container-class="'pagination'"
-      :page-class="'page-item'"
+    <Pagination
+      v-if="result?.results && route.query.search"
+      :page="page"
+      :count="result.page_count"
+      :handler="navigationCallback"
     />
   </div>
   <Cart />
 </template>
 <script lang="ts" setup>
-import Paginate from "vuejs-paginate-next";
+import Pagination from "@/components/Pagination.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import {
   LocationQueryRaw,

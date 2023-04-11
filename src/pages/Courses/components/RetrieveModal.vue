@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import Modal from "@/components/Modal.vue";
+import ObjectIndex from "./ObjectIndex.vue";
 import { modalRetrieve } from "@/store/coursesModals";
-import { useToast } from "vue-toastification";
-import type { AxiosError } from "axios";
-import type { ApiErrorProps } from "@/api";
+import { watch, ref } from "vue";
+import retrieveObjectsProgression, {
+  ObjectProgressionProps,
+} from "@/api/course/retrieveObjectsProgression";
 
-const toast = useToast();
+const objectsProgression = ref<ObjectProgressionProps[]>([]);
+watch(
+  () => modalRetrieve.isModalOpen,
+  async () => {
+    if (modalRetrieve.isModalOpen) {
+      const { data } = await retrieveObjectsProgression(modalRetrieve.data.id);
+      objectsProgression.value = data;
+    }
+  }
+);
 </script>
 
 <template>
@@ -16,11 +27,21 @@ const toast = useToast();
     description="Visualize os objetos de aprendizagem abaixo"
   >
     <ul class="objects-list">
-      <li v-for="object in modalRetrieve.objects" :key="object.id">
-        {{ object.name }}
-      </li>
+      <ObjectIndex
+        v-for="object in modalRetrieve.objects"
+        :key="object.id"
+        :name="object.name"
+        :id="object.id"
+        :is-completed="
+          objectsProgression.some(
+            (progression) =>
+              progression.learningObject === object.id &&
+              progression.isCompleted
+          )
+        "
+      />
     </ul>
-    <button class="close-button" @click="modalRetrieve.closeModal">
+    <button class="close-button" @click="() => modalRetrieve.closeModal()">
       Fechar
     </button>
   </Modal>
@@ -51,12 +72,5 @@ const toast = useToast();
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-}
-.objects-list li {
-  font-weight: bold;
-  cursor: pointer;
-}
-.objects-list li:hover {
-  text-decoration: underline;
 }
 </style>

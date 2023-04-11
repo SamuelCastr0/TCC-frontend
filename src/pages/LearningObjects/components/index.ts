@@ -9,3 +9,6 @@ export * from "./DeleteModal.vue";
 
 export { default as RetrieveModal } from "./RetrieveModal.vue";
 export * from "./RetrieveModal.vue";
+
+export { default as PublishButton } from "./PublishButton.vue";
+export * from "./PublishButton.vue";

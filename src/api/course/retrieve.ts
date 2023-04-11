@@ -11,6 +11,7 @@ export interface CourseProps {
   id: number;
   name: string;
   user: number;
+  progression: number;
 }
 
 const retrieve = async (query: string) => {

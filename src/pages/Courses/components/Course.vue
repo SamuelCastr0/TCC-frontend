@@ -16,13 +16,16 @@
         <fa icon="fa-pen-to-square" />
       </button>
     </div>
-    <div class="btn-group">
-      <button @click="modalRetrieve.openModal(course)" class="btn">
-        <fa icon="fa-eye" />
-      </button>
-      <button @click="() => modalDelete.openModal(course)" class="btn">
-        <fa icon="fa-trash" />
-      </button>
+    <div class="footer">
+      <ProgressBar :progress="course.progression * 100" />
+      <div class="btn-group">
+        <button @click="() => modalRetrieve.openModal(course)" class="btn">
+          <fa icon="fa-eye" />
+        </button>
+        <button @click="() => modalDelete.openModal(course)" class="btn">
+          <fa icon="fa-trash" />
+        </button>
+      </div>
     </div>
   </li>
 </template>
@@ -34,6 +37,7 @@ import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { ApiErrorProps } from "@/api";
 import { AxiosError } from "axios";
+import ProgressBar from "./ProgressBar.vue";
 
 interface Props {
   course: CourseProps;
@@ -97,12 +101,21 @@ onMounted(() => {
   align-self: flex-end;
   margin-top: auto;
 }
+.footer {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: auto;
+}
+.progress-bar {
+  width: 80%;
+  background: #f0f0f0;
+  border-radius: 2rem;
+}
 .btn-group {
   display: flex;
   gap: 0.5rem;
   flex-wrap: nowrap;
   margin-left: auto;
-  margin-top: auto;
 }
 .btn {
   color: var(--purple-400);

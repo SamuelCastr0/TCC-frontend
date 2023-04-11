@@ -10,14 +10,14 @@ import {
   onBeforeRouteUpdate,
 } from "vue-router";
 import type { LocationQueryRaw } from "vue-router";
-import Paginate from "vuejs-paginate-next";
 import {
   CreateModal,
   DeleteModal,
   RetrieveModal,
   UpdateModal,
+  PublishButton,
 } from "./components";
-import PublishButton from "./components/PublishButton.vue";
+import Pagination from "@/components/Pagination.vue";
 import {
   modalCreate,
   modalRetrieve,
@@ -182,16 +182,10 @@ onBeforeRouteUpdate(async () => {
           </div>
         </li>
       </ul>
-      <Paginate
-        v-model="page"
-        :page-count="result.page_count"
-        :page-range="3"
-        :margin-pages="2"
-        :click-handler="navigationCallback"
-        :prev-text="'Anterior'"
-        :next-text="'Próxima'"
-        :container-class="'pagination'"
-        :page-class="'page-item'"
+      <Pagination
+        :page="page"
+        :count="result.page_count"
+        :handler="navigationCallback"
       />
     </div>
   </div>

@@ -20,8 +20,9 @@ const fetcher =
     const headers = session.accessToken
       ? { Authorization: session.accessToken }
       : {};
+
     const { data, status } =
-      method === "get"
+      method === "get" || method === "delete"
         ? await http[method]<ResponseProps>(path, {
             ...config,
             headers: { ...config?.headers, ...headers },

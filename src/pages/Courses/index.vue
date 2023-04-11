@@ -3,7 +3,7 @@
     <div class="search">
       <input
         id="search"
-        v-model="search"
+        v-model="courseStore.search"
         v-on:input="handleSearch"
         type="text"
         placeholder="Procure por seu curso"
@@ -12,68 +12,50 @@
     </div>
     <ul class="list">
       <Course
-        v-for="course in courses?.results"
+        v-for="course in courseStore.data?.results"
         :key="course.id"
         :course="course"
       />
     </ul>
-    <Paginate
-      style="align-self: center"
-      v-if="courses"
-      v-model="page"
-      :page-count="courses.page_count"
-      :page-range="3"
-      :margin-pages="2"
-      :click-handler="navigationCallback"
-      :prev-text="'Anterior'"
-      :next-text="'Próxima'"
-      :container-class="'pagination'"
-      :page-class="'page-item'"
+    <Pagination
+      v-if="courseStore.data.results"
+      :page="courseStore.page"
+      :count="courseStore.data.page_count"
+      :handler="navigationCallback"
     />
   </div>
-  <DeleteModal @update-list="fetchCourses" />
-  <RetrieveModal @update-list="fetchCourses" />
+  <DeleteModal @update-list="() => courseStore.fetchCourses()" />
+  <RetrieveModal @update-list="() => courseStore.fetchCourses()" />
 </template>
 <script lang="ts" setup>
-import Paginate from "vuejs-paginate-next";
-import retrieve, { CourseProps, Paginated } from "@/api/course/retrieve";
-import { onMounted, ref } from "vue";
+import Pagination from "@/components/Pagination.vue";
+import { onMounted } from "vue";
 import Course from "./components/Course.vue";
 import DeleteModal from "@/pages/Courses/components/DeleteModal.vue";
 import RetrieveModal from "@/pages/Courses/components/RetrieveModal.vue";
 import {
   LocationQueryRaw,
   onBeforeRouteUpdate,
-  stringifyQuery,
   useRoute,
   useRouter,
 } from "vue-router";
 import debounce from "@/utils/debounce";
+import { courseStore } from "@/store/course";
 
 export interface QueryParamsProps extends LocationQueryRaw {
   page: number;
   search?: string;
 }
 
-const courses = ref<Paginated<CourseProps>>();
-const page = ref<number>(1);
-const search = ref<string>("");
 const router = useRouter();
 const route = useRoute();
 
-const fetchCourses = async () => {
-  const query = { page: page.value, search: search.value };
-  const queryStringfyed = stringifyQuery(query);
-  const { data } = await retrieve(queryStringfyed);
-  courses.value = data;
-};
-
 const updateRoute = () => {
   const query: QueryParamsProps = {
-    search: search.value,
-    page: search.value ? 1 : page.value,
+    search: courseStore.search,
+    page: courseStore.search ? 1 : courseStore.page,
   };
-  if (!search.value) delete query?.search;
+  if (!courseStore.search) delete query?.search;
   router.push({
     path: "courses",
     query,
@@ -86,18 +68,18 @@ const debouncedSearch = debounce(updateRoute, 800);
 const handleSearch = () => debouncedSearch();
 
 const navigationCallback = (pageNum) => {
-  page.value = Number(pageNum);
+  courseStore.page = Number(pageNum);
   updateRoute();
 };
 
 onMounted(async () => {
-  search.value = route.query.search as any as string;
-  page.value = Number(route.query.page || 1) as any as number;
+  courseStore.search = route.query.search as any as string;
+  courseStore.page = Number(route.query.page || 1) as any as number;
   updateRoute();
 });
 
 onBeforeRouteUpdate(async () => {
-  fetchCourses();
+  courseStore.fetchCourses();
 });
 </script>
 <style scoped>

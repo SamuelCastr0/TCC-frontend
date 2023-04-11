@@ -1,12 +1,14 @@
-@import './reset.css';
-@import './pagination.css';
+@import "./reset.css";
 
 :root {
-    --purple-400: #4b1aff;
-    --bg: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(75,26,255,1) 100%);
+  --purple-400: #4b1aff;
+  --bg: linear-gradient(
+    45deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(75, 26, 255, 1) 100%
+  );
 }
 
 * {
-    font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
-
