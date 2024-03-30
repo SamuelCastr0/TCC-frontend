@@ -5,7 +5,11 @@ import { modalRetrieve } from "@/store/coursesModals";
 import { courseStore } from "@/store/course";
 
 const props = defineProps({
-  name: {
+  title: {
+    type: String,
+    required: true,
+  },
+  link: {
     type: String,
     required: true,
   },
@@ -32,15 +36,15 @@ const handleToogle = async () => {
   <li class="object">
     <label class="check-container">
       <input
-        :id="props.name"
-        :name="props.name"
+        :id="props.title"
+        :name="props.title"
         type="checkbox"
         :value="true"
         :checked="checked"
       />
       <span class="checkmark" v-on:click="() => handleToogle()"></span>
     </label>
-    <a href="">{{ props.name }}</a>
+    <a :href="props.link" target="_blank">{{ props.title }}</a>
   </li>
 </template>
 <style scoped>

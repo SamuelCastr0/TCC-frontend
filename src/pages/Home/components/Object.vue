@@ -1,10 +1,10 @@
 <template>
   <li class="object" :key="props.object.id">
-    <h3>{{ props.object.name }}</h3>
+    <h3 class="title">
+      <a :href="props.object.link" target="_blank">{{ props.object.title }}</a>
+    </h3>
     <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley.
+      {{ props.object.description }}
     </p>
     <button
       v-if="cart.value.find((item) => item.id === props.object.id)"
@@ -19,7 +19,7 @@
   </li>
 </template>
 <script setup lang="ts">
-import { LearningObject } from "@/api/learningObjects/search";
+import { LearningObject } from "@/api/learningObjects/retrieve";
 import cart from "@/store/cart";
 
 interface Props {
@@ -44,8 +44,16 @@ const props = defineProps<Props>();
   color: black;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
-.object h3 {
+.title {
   font-size: 2rem;
+}
+.title a {
+  color: black;
+  text-decoration: none;
+}
+.title a:hover {
+  color: var(--purple-400);
+  text-decoration: underline;
 }
 .btn {
   background: transparent;

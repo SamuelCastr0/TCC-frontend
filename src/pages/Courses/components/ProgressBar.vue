@@ -8,7 +8,7 @@ interface ProgressBarProps {
 const props = defineProps<ProgressBarProps>();
 const style = computed(() => {
   return {
-    width: `${props.progress}%`,
+    width: `${props.progress || 4}%`,
   };
 });
 </script>

@@ -1,10 +1,5 @@
 import fetcher from "..";
-
-export interface LearningObject {
-  id: number;
-  name: string;
-  isPublished: boolean;
-}
+import { LearningObject } from "./retrieve";
 
 export interface PaginationResponseProps {
   results: Array<LearningObject>;

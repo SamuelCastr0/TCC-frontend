@@ -24,12 +24,9 @@
             <div v-if="item.id === cart.value[0].id" class="separator"></div>
             <li :key="item.id">
               <div>
-                <h4>{{ item.name }}</h4>
+                <h4>{{ item.title }}</h4>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley.
+                  {{ item.description }}
                 </p>
               </div>
               <fa
@@ -60,13 +57,13 @@ import Draggable from "vue3-draggable";
 import { ref, onBeforeMount, watch } from "vue";
 import cart from "@/store/cart";
 import Button from "@/components/Button.vue";
-import { LearningObject } from "@/api/learningObjects/search";
 import user from "@/store/user";
 import createCourse from "@/api/course/create";
 import { useToast } from "vue-toastification";
 import { ApiErrorProps } from "@/api";
 import { AxiosError } from "axios";
 import { RouterLink } from "vue-router";
+import { LearningObject } from "@/api/learningObjects/retrieve";
 
 const isOpen = ref<boolean>(false);
 const name = ref<string>("Nome do curso");

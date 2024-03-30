@@ -30,7 +30,8 @@ watch(
       <ObjectIndex
         v-for="object in modalRetrieve.objects"
         :key="object.id"
-        :name="object.name"
+        :title="object.title"
+        :link="object.link"
         :id="object.id"
         :is-completed="
           objectsProgression.some(

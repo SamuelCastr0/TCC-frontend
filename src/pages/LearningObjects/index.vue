@@ -146,11 +146,11 @@ onBeforeRouteUpdate(async () => {
       <ul class="object-list">
         <li class="object" v-for="item in result.results" :key="item.id">
           <div class="object-info">
-            <h3 class="title">{{ item.name }}</h3>
+            <h3 class="title">
+              <a :href="item.link" target="_blank">{{ item.title }}</a>
+            </h3>
             <p class="description">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley.
+              {{ item.description }}
             </p>
           </div>
           <div class="object-footer">
@@ -327,5 +327,13 @@ onBeforeRouteUpdate(async () => {
 }
 .title {
   font-size: 2rem;
+}
+.title a {
+  color: black;
+  text-decoration: none;
+}
+.title a:hover {
+  color: var(--purple-400);
+  text-decoration: underline;
 }
 </style>

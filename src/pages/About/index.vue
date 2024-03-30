@@ -3,28 +3,39 @@
     <h2>O que é a Pesquise</h2>
     <div class="wrapper">
       <p>
-        Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent
-        aliquam, est eu dignissim sodales, odio neque malesuada eros, a blandit
-        lectus arcu sed velit. Maecenas ultrices dolor vel nulla euismod
-        efficitur. Praesent ex tortor, suscipit auctor commodo sit amet, laoreet
-        ut magna. Donec dapibus at dolor at hendrerit. Praesent felis mi,
-        accumsan non varius id, venenatis vel lorem. Nullam porttitor augue ex,
-        eget sodales sapien cursus ac. Donec non laoreet nisi. Nullam neque
-        risus, aliquam eget varius quis, finibus nec sapien. Duis vulputate ex
-        aliquet nunc rhoncus consectetur ac vitae nisl. Nunc vitae massa augue.
-        In hac habitasse platea dictumst. Nullam ullamcorper molestie commodo.
+        Comprometidos com a evolução da tecnologia educacional, desenvolvemos um
+        repositório de objetos de aprendizagem baseado no modelo IEEE/LOM
+        (Learning Object Metadata). Este repositório é uma ferramenta para
+        organizar e recuperar conteúdos educacionais, funcionando também como
+        uma plataforma educacional interativa que facilita experiências de
+        aprendizagem ricas e personalizadas.
       </p>
       <p>
-        Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent
-        aliquam, est eu dignissim sodales, odio neque malesuada eros, a blandit
-        lectus arcu sed velit. Maecenas ultrices dolor vel nulla euismod
-        efficitur. Praesent ex tortor, suscipit auctor commodo sit amet, laoreet
-        ut magna. Donec dapibus at dolor at hendrerit. Praesent felis mi,
-        accumsan non varius id, venenatis vel lorem. Nullam porttitor augue ex,
-        eget sodales sapien cursus ac. Donec non laoreet nisi. Nullam neque
-        risus, aliquam eget varius quis, finibus nec sapien. Duis vulputate ex
-        aliquet nunc rhoncus consectetur ac vitae nisl. Nunc vitae massa augue.
-        In hac habitasse platea dictumst. Nullam ullamcorper molestie commodo.
+        Com a aplicação de linguagens e frameworks como Python e Django para o
+        backend e TypeScript e Vue.js para o frontend, criamos um site de busca
+        avançada que se integra à nossa plataforma educacional. A interface do
+        frontend permite que os usuários interajam facilmente com o sistema,
+        enquanto o backend assegura a eficácia e precisão no processamento dos
+        dados.
+      </p>
+      <p>
+        Nossa plataforma simplifica a busca e organização de objetos de
+        aprendizagem e oferece funcionalidades CRUD (Create, Read, Update,
+        Delete) para um gerenciamento eficiente desses objetos, atendendo às
+        necessidades variadas de usuários, desde educadores até estudantes.
+        Adicionalmente, o sistema permite a criação de cursos personalizados a
+        partir dos objetos de aprendizagem, incluindo recursos para monitorar o
+        progresso nos cursos, apoiando uma experiência educacional adaptativa e
+        participativa.
+      </p>
+      <p>
+        O propósito da nossa plataforma é ser uma ferramenta útil no campo da
+        tecnologia educacional, melhorando a acessibilidade e a organização dos
+        recursos educacionais. Nosso foco é impactar positivamente a comunidade
+        educacional, fornecendo uma solução prática para o gerenciamento de
+        conteúdo educacional, incentivando todos a descobrirem as
+        funcionalidades que nosso repositório proporciona no aprimoramento do
+        processo de ensino-aprendizagem.
       </p>
     </div>
   </div>
@@ -41,15 +52,11 @@
 }
 .wrapper {
   width: 100%;
-  background: white;
   min-width: 18.75rem;
-  padding: 2.5rem;
-  border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
 h2 {
   font-weight: 700;

@@ -17,6 +17,18 @@
         :icon="isVisible ? 'fa-eye-slash' : 'fa-eye'"
       />
     </div>
+    <textarea
+      v-else-if="type === 'textarea'"
+      @keydown.prevent.enter
+      :name="name"
+      :id="name"
+      :value="inputValue"
+      :type="type"
+      :placeholder="placeholder"
+      @input="handleChange"
+      @blur="handleBlur"
+      class="textarea"
+    ></textarea>
     <input
       v-else
       @keydown.prevent.enter
@@ -76,6 +88,13 @@ const {
 .input {
   width: 100%;
   height: 3rem;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 7px;
+  padding: 1rem;
+}
+.textarea {
+  width: 100%;
+  resize: vertical;
   border: 2px solid rgba(0, 0, 0, 0.75);
   border-radius: 7px;
   padding: 1rem;

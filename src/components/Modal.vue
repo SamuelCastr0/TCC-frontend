@@ -25,29 +25,29 @@ defineEmits(["closeModal"]);
 </template>
 <style scoped>
 .container {
-  position: fixed;
+  position: absolute;
   z-index: 1000;
   top: 0;
   right: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(128, 128, 128, 0.8);
-  overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: none;
+  overflow-y: scroll;
 }
 .wrapper {
   opacity: 1;
+  margin: 2rem;
   padding: 2rem;
   background: white;
-  position: relative;
   border-radius: 14px;
   min-width: 18.75rem;
   max-width: 31.25rem;
   width: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 2rem;
 }

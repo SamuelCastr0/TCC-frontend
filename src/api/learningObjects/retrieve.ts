@@ -2,7 +2,12 @@ import fetcher from "..";
 
 export interface LearningObject {
   id: number;
-  name: string;
+  title: string;
+  description: string;
+  keywords: string;
+  link: string;
+  durationMin: number;
+  language: string;
   isPublished: boolean;
 }
 
