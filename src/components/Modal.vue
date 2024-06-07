@@ -25,7 +25,7 @@ defineEmits(["closeModal"]);
 </template>
 <style scoped>
 .container {
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   top: 0;
   right: 0;

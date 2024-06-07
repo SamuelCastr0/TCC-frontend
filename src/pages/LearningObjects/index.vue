@@ -336,4 +336,9 @@ onBeforeRouteUpdate(async () => {
   color: var(--purple-400);
   text-decoration: underline;
 }
+.description {
+  height: 2rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 </style>

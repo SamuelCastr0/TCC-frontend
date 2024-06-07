@@ -3,7 +3,7 @@
     <h3 class="title">
       <a :href="props.object.link" target="_blank">{{ props.object.title }}</a>
     </h3>
-    <p>
+    <p class="description">
       {{ props.object.description }}
     </p>
     <button
@@ -65,5 +65,10 @@ const props = defineProps<Props>();
   position: absolute;
   right: 2rem;
   bottom: 1.5rem;
+}
+.description {
+  height: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

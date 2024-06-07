@@ -20,7 +20,7 @@
             :src="userImage"
           />
           <fa v-else class="user-icon" icon="fa-user-circle" />
-          <span @click="toggleOpen">{{ user.value?.name.split(" ")[0] }}</span>
+          <span @click="toggleOpen">{{ user.value?.name?.split(" ")[0] }}</span>
           <ul class="drop-down" @click="stopPropagation" v-if="isOpen">
             <li @click="handleLogout">
               <router-link to="">Sair</router-link>
@@ -30,6 +30,7 @@
         </li>
       </ul>
       <ul v-else class="navigation-options">
+        <li><router-link to="/about">Sobre</router-link></li>
         <li>
           <router-link @click="handleLogout" to="/signin">Entrar</router-link>
         </li>
